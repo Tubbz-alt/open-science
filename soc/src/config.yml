@@ -1,0 +1,46 @@
+# Config file for SOC Map
+# Wilmot Cattle Project
+# Image Dates: May 2019
+# Image Type: S2A-L2A
+
+input-files:
+  # soc sample point locations - attribute fields: Name (str), SOC (float)
+  soc-point-file : "wilmot_sampling_locations_2019.gpkg"
+
+  # project polygons - attribute fields: Name (str)
+  project-polygons : "wilmot_polygons.gpkg"
+
+  # grasslands mask w/single field - attribute fields: NA
+  grassland-mask : "final_output_mask.gpkg"
+
+  # rasters to include in percent soc model selection
+  raster-list:
+    raster-1:
+      name : "20190506_20190521_average_ndvi_clipped.tif"
+      band-list : ["ndvi"]
+    raster-2:
+      name : "20190506_20190521_average_stacked_clipped.tif"
+      band-list : ["B02", "B03", "B04", "B05", "B06", "B08", "B11", "B12"]
+
+# bulk density calculation parameters
+bulk-density:
+  # method for bulk density (pedotransfer or constant)
+  method : "pedotransfer"
+  # pedotransfer equation (x should always be used to represent soc)
+  pedotransfer-eq : "1.608 - 0.0872*x"
+  # bulk density constant to be applied to all sample locations (float)
+  constant : ~
+
+livestock-data:
+  # number of animals on farm
+  livestock-count : 1532
+  # number of days livestock spent on farm
+  days-on-farm : 147
+  # emission factor (kg CO2e / head / day)
+  EFliv : 4.05
+
+model-parameters:
+  # types of regression models to process
+  model-type : ["linear", "power"]
+  # maximum number of outliers to remove
+  outlier-removal : 5
